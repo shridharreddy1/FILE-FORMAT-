@@ -1,0 +1,66 @@
+file format in hive 
+
+
+1. sequence file 
+
+>  sequence file store data in a binary format
+>  sequence file do supportblock compression which may be snappylzo or gzip
+
+set hive.exec.compress.output=true;
+set mapred.output.compression=true;
+set mapred.output.compression.codec=org.apache.hadoop.io.compress.SnappyCodec;
+
+> Due to the complexity of reading sequence files,they are often used only for 
+  'in flight' data such as intermediate data storage used with a sequence of mapreduce jobs
+
+2. RC file format 
+
+> RC files were the first columnar files adopted in hadoop 
+> RC files have significant compression & query performance benefits
+> Although RC files are good for query, writing an RC files requires more memory and 
+  computation than non-columnar file formats, they are generally slower to write.
+>   
+  
+
+3.ORC file format 
+
+> optimized row columnar file format 
+> provide very efficient way to store relational data then RC file 
+> use to improve the performance of hive query  & reduces access time & reduces storage space 
+> using ORC files improves performance when hive is reading, writting & processing data
+  
+  set hive.default.fileformat=Orc;
+  
+  
+4. Avro file format
+
+> Avro file store metadata with the data but also allow specification
+  of an independent schema for reading the file. This makes Avro the epitome of 
+  schema evolution support since you can rename,add,delete and change the data types of fields by defining 
+  new independent schema.
+
+> Additionally , Avro files are splittable, support block compression and 
+  enjoy broad ,relatively mature,tool support with the hadoop ecosystem.
+
+
+
+5. Parquet file format 
+
+> parquet file format are yet another columnar fiel format taht originated from doug cutting'
+> Like RC & ORC , parquet enjoys compression, query optiomization
+  and is slower to write than non-columnar file formats
+> however like RC & ORC files parquet serdes support limited schema evolution
+  ,In parquet ,new column can be added at the end of the structure.
+
+
+
+
+
+
+
+
+
+
+
+
+
